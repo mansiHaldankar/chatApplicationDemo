@@ -1,0 +1,18 @@
+<mat-card class="login-form-container">
+    <form #postForm="ngForm" class="login-form">
+        <mat-form-field class="userName-input">
+            <input matInput name="user" required [(ngModel)]="user" minlength='3' placeholder="User Name">
+        </mat-form-field>
+        <mat-form-field class="room-select-box">
+            <mat-label>Select Room</mat-label>
+            <mat-select [(ngModel)]="room" name="room" required>
+                <mat-option *ngFor="let room of rooms" [value]="room.value">
+                    {{room.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="join-chatRoom-btn">
+            <button mat-raised-button color="primary" type="submit" (click)="onJoinClickHandler()">Join Chat Room </button>
+        </div>
+    </form>
+</mat-card>

@@ -1,0 +1,32 @@
+.chat-window {
+    height: 70%;
+    width: 80%;
+    margin: auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.chat-msgs {
+    margin: 10px;
+}
+
+.chat-sec {
+    height: 85%;
+}
+
+.message-input {
+    width: 80%;
+    margin-right: 15px;
+    background-color: #fff;
+    padding: 0 10px;
+}
+
+.enter-msg-sec {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-btns button {
+    margin: 0 10px;
+}

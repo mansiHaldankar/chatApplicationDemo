@@ -1,0 +1,17 @@
+<div class="chat-window">
+    <div class="chat-sec">
+        <div *ngFor='let item of messageArray' class="chat-msgs">
+            <strong>{{item.user}}</strong>: {{item.message}}
+        </div>
+    </div>
+    <div class="enter-msg-sec">
+        <mat-form-field class="message-input">
+            <input matInput name="inputMessage" [(ngModel)]="inputMessage" placeholder="Enter your message">
+        </mat-form-field>
+        <div class="chat-btns">
+            <button mat-raised-button color="primary" type="submit" (click)="onSendMsgClickHandler()">Send </button>
+            <!-- <button mat-raised-button color="primary" type="submit" (click)="onLeaveClickHandler()">Leave Room </button> -->
+        </div>
+
+    </div>
+</div>

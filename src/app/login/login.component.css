@@ -1,0 +1,25 @@
+.login-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.login-form {
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px #ccc;
+    padding: 50px;
+}
+
+.userName-input,
+.room-select-box {
+    width: 100%;
+}
+
+.join-chatRoom-btn {
+    text-align: center;
+    margin-top: 15px;
+}
