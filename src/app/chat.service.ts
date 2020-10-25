@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class ChatService {
 
   chatSubject = new Subject<any>();
+  loggedInUser: any = {};
 
   // tslint:disable-next-line: variable-name
   constructor( private _router: Router  ) { }
@@ -18,6 +19,7 @@ export class ChatService {
 
   joinRoom(data): void{
     this.chatSubject.next(data);
+    this.loggedInUser = data;
     this.socket.emit('join', data);
   }
 
@@ -32,6 +34,23 @@ export class ChatService {
 
     return observable;
   }
+
+  // this method would be removed/modified after DB connectivity for users
+  getUserDetails(){
+    const observable = new Observable<{user: string, room: string,  id: string}>(observer => {
+      // this.socket.on('userDetails', (data) => {
+      //     debugger;
+      //     observer.next(data);
+      // });
+
+      // return () => {this.socket.disconnect();}
+      observer.next(this.loggedInUser);
+  });
+
+    return observable;
+  }
+
+
 
   leaveRoom(data): void{
     this.socket.emit('leave', data);
