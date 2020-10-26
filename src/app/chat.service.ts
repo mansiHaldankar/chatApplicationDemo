@@ -72,5 +72,16 @@ export class ChatService {
   return observable;
   }
 
+  newMessageReceivedNotification() {
+    let observable = new Observable<{user:string, message:string}>(observer=>{
+      this.socket.on('newMsgNotification', (data)=>{
+          observer.next(data);
+      });
+      return () => {this.socket.disconnect()};
+  });
+
+  return observable;
+  }
+
 
 }

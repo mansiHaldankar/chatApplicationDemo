@@ -97,7 +97,7 @@ img {
 .msg-send-btn {
     position: absolute;
     right: 0;
-    top: 5px;
+    top: 8px;
     box-shadow: 0 0 black;
 }
 
@@ -142,4 +142,5 @@ img {
 
 .sign-out-icon {
     cursor: pointer;
+    margin-left: 10px;
 }

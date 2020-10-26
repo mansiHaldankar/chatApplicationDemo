@@ -31,6 +31,7 @@ io.on('connection', socket => {
     socket.on('message', (data) => {
         console.log(data);
         io.in(data.room).emit('newMsg', { user: data.user, message: data.message });
+        socket.to(data.room).emit('newMsgNotification', { user: data.user, message: data.message });
     });
 });
 

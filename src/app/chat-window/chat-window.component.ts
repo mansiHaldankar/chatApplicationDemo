@@ -3,6 +3,7 @@ import { ChatService } from './../chat.service';
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-chat-window',
@@ -18,13 +19,16 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
   chatSubscription: Subscription;
   loggedInUsers: any = [];
   userObj: any = {};
+  horizontalPos: MatSnackBarHorizontalPosition = 'right';
+  verticalPos: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor( private chatService: ChatService, private router: Router ) {
+  constructor( private chatService: ChatService, private router: Router, private snackBar: MatSnackBar ) {
 
     this.chatSubscription = this.chatService.newUserJoined().subscribe(data => {
       console.log(data);
       this.messageArray.push(data);
       this.getMsgType(this.messageArray);
+      this.openToastMessage('U', data);
     });
 
     this.chatSubscription = this.chatService.getUserDetails().subscribe(data => {
@@ -36,6 +40,10 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
       console.log(data);
       this.messageArray.push(data);
       this.getMsgType(this.messageArray);
+    });
+    this.chatSubscription = this.chatService.newMessageReceivedNotification().subscribe(data => {
+      console.log(data);
+      this.openToastMessage('M', data);
     });
 
     this.chatSubscription = this.chatService.userLeftRoom().subscribe(data => {
@@ -67,6 +75,22 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
   onSendMsgClickHandler(): void{
     this.chatService.sendMessage({user: this.userObj.user, room: this.userObj.room, message: this.inputMessage});
     this.inputMessage = '';
+  }
+
+  openToastMessage(evtType,  data): void {
+    let message;
+    if (evtType === 'U') {
+      message = data.user + ' has joined ' + data.room;
+    } else if (evtType === 'M'){
+      message = 'Message Received from ' + data.user;
+    }
+
+    this.snackBar.open(message, 'Dismiss', {
+      duration: 300000,
+      horizontalPosition: this.horizontalPos,
+      verticalPosition: this.verticalPos,
+      panelClass: 'notif-success'
+    });
   }
 
 ngOnDestroy(): void {
