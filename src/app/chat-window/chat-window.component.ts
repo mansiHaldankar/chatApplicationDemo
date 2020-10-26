@@ -27,7 +27,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
     this.chatSubscription = this.chatService.newUserJoined().subscribe(data => {
       console.log(data);
       this.messageArray.push(data);
-      this.getMsgType(this.messageArray);
+      // this.getMsgType(this.messageArray);
       this.openToastMessage('U', data);
     });
 
@@ -48,7 +48,8 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
 
     this.chatSubscription = this.chatService.userLeftRoom().subscribe(data => {
       this.messageArray.push(data);
-      this.getMsgType(this.messageArray);
+      // this.getMsgType(this.messageArray);
+      this.openToastMessage('L', data);
     });
   }
 
@@ -83,10 +84,12 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
       message = data.user + ' has joined ' + data.room;
     } else if (evtType === 'M'){
       message = 'Message Received from ' + data.user;
+    } else if (evtType === 'L') {
+      message = data.user + ' has left ' + data.room;
     }
 
     this.snackBar.open(message, 'Dismiss', {
-      duration: 300000,
+      duration: 3000,
       horizontalPosition: this.horizontalPos,
       verticalPosition: this.verticalPos,
       panelClass: 'notif-success'

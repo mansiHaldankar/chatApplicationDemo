@@ -19,19 +19,36 @@ io.on('connection', socket => {
     socket.on('join', (data) => {
         socket.join(data.room);
         console.log(data.user + "  Joined the roomsss " + data.room);
-        socket.to(data.room).emit("newUserJoined", { user: data.user, room: data.room, message: `has joined the room ${data.room}` }); //
+        socket.to(data.room).emit("newUserJoined", {
+            user: data.user,
+            room: data.room,
+            status: 'Join',
+            message: `has joined the  ${data.room}`,
+        }); //
     });
 
     socket.on('leave', (data) => {
         console.log(data.user + "  Left the room " + data.room);
-        socket.to(data.room).emit("leftRoom", { user: data.user, room: data.room, message: `has left the room ${data.room}` });
+        socket.to(data.room).emit("leftRoom", {
+            user: data.user,
+            room: data.room,
+            status: 'Left',
+            message: `has left the  ${data.room}`
+        });
         socket.leave(data.room);
     });
 
     socket.on('message', (data) => {
         console.log(data);
-        io.in(data.room).emit('newMsg', { user: data.user, message: data.message });
-        socket.to(data.room).emit('newMsgNotification', { user: data.user, message: data.message });
+        io.in(data.room).emit('newMsg', {
+            user: data.user,
+            status: 'Msg',
+            message: data.message
+        });
+        socket.to(data.room).emit('newMsgNotification', {
+            user: data.user,
+            message: data.message
+        });
     });
 });
 

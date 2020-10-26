@@ -144,3 +144,7 @@ img {
     cursor: pointer;
     margin-left: 10px;
 }
+
+.status-sec {
+    text-align: center;
+}

@@ -7,16 +7,20 @@
     <div class="mesgs">
         <div class="msg-history-sec">
             <div class="msg-history" *ngFor='let item of messageArray'>
+                <div class="status-sec" *ngIf="item.status == 'Join' ||item.status == 'Left' ">
+                    <p><strong>{{item.user}} </strong>{{item.message}}
+                    </p>
+                </div>
                 <div class="incoming_msg">
                     <!-- <div class="incoming-msg-img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div> -->
-                    <div class="received-msg" *ngIf="item.type == 'I'">
+                    <div class="received-msg" *ngIf="item.type == 'I' && item.status == 'Msg'">
                         <div class="received-withd-msg">
                             <p><strong>{{item.user}} : </strong>{{item.message}}
                             </p>
                             <!-- <span class="time-date"> 11:01 AM    |    June 9</span></div> -->
                         </div>
                     </div>
-                    <div class="outgoing-msg" *ngIf="item.type == 'O'">
+                    <div class="outgoing-msg" *ngIf="item.type == 'O' && item.status == 'Msg'">
                         <div class="sent-msg">
                             <p>{{item.message}}
                             </p>
