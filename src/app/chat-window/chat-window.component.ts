@@ -1,9 +1,8 @@
-import { ActivatedRoute } from '@angular/router';
 import { ChatService } from './../chat.service';
-import { AfterViewChecked, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-window',
@@ -15,15 +14,17 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
   user: string;
   room: string;
   inputMessage: string;
-  messageArray: Array<{user: string, message: string,}> = [];
+  messageArray: any = [];
   chatSubscription: Subscription;
   loggedInUsers: any = [];
   userObj: any = {};
 
-  constructor( private chatService: ChatService ) {
+  constructor( private chatService: ChatService, private router: Router ) {
+
     this.chatSubscription = this.chatService.newUserJoined().subscribe(data => {
       console.log(data);
       this.messageArray.push(data);
+      this.getMsgType(this.messageArray);
     });
 
     this.chatSubscription = this.chatService.getUserDetails().subscribe(data => {
@@ -34,42 +35,39 @@ export class ChatWindowComponent implements OnInit, OnDestroy  {
     this.chatSubscription = this.chatService.newMessageReceived().subscribe(data => {
       console.log(data);
       this.messageArray.push(data);
-      // tslint:disable-next-line: forin
-      for (let iMsg in this.messageArray) {
-        this.messageArray[iMsg]['type'] = "I";
-        if(this.messageArray[iMsg].user.trim() !== this.userObj.user.trim()) {
-          this.messageArray[iMsg]['type'] = 'O';
-        }
-      }
-      console.log(this.messageArray);
+      this.getMsgType(this.messageArray);
     });
 
     this.chatSubscription = this.chatService.userLeftRoom().subscribe(data => {
-      console.log(data);
       this.messageArray.push(data);
+      this.getMsgType(this.messageArray);
     });
   }
-
 
   ngOnInit(): void {
 
   }
-
+// tslint:disable-next-line: typedef
+  getMsgType(messageArray){
+    // tslint:disable-next-line: forin
+    for (const iMsg in this.messageArray) {
+      this.messageArray[iMsg].type = 'O';
+      if (this.messageArray[iMsg].user.trim() !== this.userObj.user.trim()) {
+        this.messageArray[iMsg].type = 'I';
+      }
+    }
+  }
 
   onLeaveClickHandler(): void{
-    this.user = document.querySelector('span.logged-in-user').innerHTML;
-    this.room = document.querySelector('span.logged-in-room').innerHTML;
-    this.chatService.leaveRoom({user: this.user.trim(), room: this.room.trim()});
+    this.chatService.leaveRoom({user: this.userObj.user, room: this.userObj.room});
+    this.router.navigate(['/']);
+
   }
 
   onSendMsgClickHandler(): void{
-    this.user = document.querySelector('span.logged-in-user').innerHTML;
-    this.room = document.querySelector('span.logged-in-room').innerHTML;
-    this.chatService.sendMessage({user: this.user.trim(), room: this.room.trim(), message: this.inputMessage});
-    this.inputMessage = "";
+    this.chatService.sendMessage({user: this.userObj.user, room: this.userObj.room, message: this.inputMessage});
+    this.inputMessage = '';
   }
-
-
 
 ngOnDestroy(): void {
     this.chatSubscription.unsubscribe();

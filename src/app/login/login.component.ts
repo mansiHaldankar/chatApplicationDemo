@@ -24,17 +24,15 @@ export class LoginComponent implements OnInit {
     {value: 'Room-3', viewValue: 'Room-3'}
   ];
 
-  @Output() newItemEvent = new EventEmitter<string>();
-
   constructor( private chatService: ChatService,
-               private _router: Router ) { }
+               private router: Router ) { }
 
   ngOnInit(): void {
   }
   onJoinClickHandler(): void{
     // this._router.navigate(['/chatWindow', {user: this.user, room: this.room}]);
     this.chatService.joinRoom({user: this.user, room: this.room});
-    this._router.navigate(['/chatWindow']);
+    this.router.navigate(['/chatWindow']);
  }
 
 }

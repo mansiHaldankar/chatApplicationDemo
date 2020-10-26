@@ -1,4 +1,3 @@
-import { ChatService } from './chat.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 
@@ -10,16 +9,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AppComponent implements OnInit{
   title = 'chatApplicationDemo';
 
-  userName: string;
-  room: string;
-
-  constructor( private chatService: ChatService ){}
+  constructor( ){}
 
   ngOnInit(): void {
-    this.chatService.chatSubject.subscribe(data => {
-      this.userName = data.user;
-      this.room = data.room;
-    });
   }
 
 

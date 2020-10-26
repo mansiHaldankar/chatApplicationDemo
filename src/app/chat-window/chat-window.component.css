@@ -19,6 +19,10 @@ img {
     width: 92%;
 }
 
+.msg-history-sec .msg-history:not(:first-child) {
+    margin-top: 25px;
+}
+
 .received-withd-msg p {
     background: #ebebeb none repeat scroll 0 0;
     border-radius: 3px;
@@ -42,8 +46,11 @@ img {
 
 .mesgs {
     float: left;
-    padding: 30px 15px 0 25px;
+    padding: 25px 25px 15px 25px;
     width: 100%;
+    border: 1px solid #ccc;
+    margin-top: 15px;
+    box-shadow: 0 0 black;
 }
 
 .sent-msg p {
@@ -75,9 +82,16 @@ img {
     width: 100%;
 }
 
+.input-msg-write:focus,
+.input-msg-write input:focus,
+.msg-send-btn:focus {
+    outline: 0;
+}
+
 .type-msg {
     border-top: 1px solid #c4c4c4;
     position: relative;
+    margin-top: 26px;
 }
 
 .msg-send-btn {
@@ -97,9 +111,9 @@ img {
     line-height: 21px;
 }
 
-msg-history-sec {
+.msg-history-sec {
     display: block;
-    min-height: 523px;
+    min-height: 400px;
     overflow-y: auto;
 }
 
@@ -107,4 +121,25 @@ msg-history-sec {
     border: 1px solid #c4c4c4;
     clear: both;
     overflow: hidden;
+}
+
+.logged-in-user {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color: #fff;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: #00ff00;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.sign-out-icon {
+    cursor: pointer;
 }

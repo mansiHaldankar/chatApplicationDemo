@@ -28,29 +28,19 @@ export class ChatService {
       this.socket.on('newUserJoined', (data) => {
           observer.next(data);
       });
-
       return () => {this.socket.disconnect();}
   });
-
     return observable;
   }
 
   // this method would be removed/modified after DB connectivity for users
   getUserDetails(){
     const observable = new Observable<{user: string, room: string,  id: string}>(observer => {
-      // this.socket.on('userDetails', (data) => {
-      //     debugger;
-      //     observer.next(data);
-      // });
-
-      // return () => {this.socket.disconnect();}
       observer.next(this.loggedInUser);
   });
 
     return observable;
   }
-
-
 
   leaveRoom(data): void{
     this.socket.emit('leave', data);
@@ -81,5 +71,6 @@ export class ChatService {
 
   return observable;
   }
+
 
 }
